@@ -16,7 +16,6 @@
         <br></br>
         <h3>EGB320 | Demo Management System</h3>
         <p></p>
-        
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-settings-tab" data-toggle="tab" href="#nav-settings" role="tab" aria-controls="nav-setting" aria-selected="true">Settings</a>
@@ -30,32 +29,44 @@
                     <h5>Field Settings</h5>
                     <form>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-4 col-form-label">Field No</label>
+                            <label for="fieldNoText" class="col-sm-4 col-form-label">Field No</label>
                             <div class="col-sm-8">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="Field No">
+                            <input type="text" class="form-control" id="fieldNoText" value="1">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-4 col-form-label">Setup Duration (min)</label>
+                                <label for="groupNoText" class="col-sm-4 col-form-label">Group No</label>
+                                <div class="col-sm-8">
+                                <input type="text" class="form-control" id="groupNoText" placeholder="Group Number">
+                                </div>
+                            </div>
+                        <div class="form-group row">
+                            <label for="setupDurationText" class="col-sm-4 col-form-label">Setup Duration (s)</label>
                             <div class="col-sm-8">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="Setup Duration">
+                            <input type="text" class="form-control" id="setupDurationText" value="2">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-4 col-form-label">Demo Duration (min)</label>
+                            <label for="demoDurationText" class="col-sm-4 col-form-label">Demo Duration (s)</label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Demo Duration">
+                                <input type="text" class="form-control" id="demoDurationText" value="10">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-4 col-form-label">Timeout Duration (min)</label>
+                            <label for="timeoutDurationText" class="col-sm-4 col-form-label">Timeout Duration (s)</label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Timeout Duration">
+                                <input type="text" class="form-control" id="timeoutDurationText" value="300">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <table>
+                                <tr>
+                                    <td><button type="button" class="btn btn-primary" onclick="saveSettings()">Save Changes</button></td>
+                                    <td>&nbsp</td>
+                                    <td><h6 style="color: green" id="changesReturn"></h6></td>
+                                </tr>
+                            </table>
                             </div>
                         </div>
                         <hr></hr>
@@ -76,38 +87,44 @@
             </div>
             <div class="tab-pane fade" id="nav-gameplay" role="tabpanel" aria-labelledby="nav-gameplay-tab">
                 <p></p>
-                <h2>Field 2 | Group 16 </h2>
+                <table>
+                    <tr>
+                        <td><h2 id="demoInfo">Field 2 | Group 16 |</h2></td>
+                        <td>&nbsp</td>
+                        <td><button type="button" class="btn btn-outline-info btn-sm" onclick="resetField()" id="restFieldButton">Reset Field</button></td>
+                    </tr>
+                </table>
                 <hr></hr>
                 <h5><center>Timers</center></h5>
                 <ul class="list-group list-group-horizontal">
                     <li class="list-group-item flex-fill">
                         <center>Setup</center>
                         <p></p>
-                        <center><h2>10:00</h2></center>
+                        <center><h2 id="setupTimer">n/a</h2></center>
                         <p></p>
-                            <center><button type="button" class="btn btn-success">Start</button></center>
+                            <center><button type="button" class="btn btn-success" onclick="onStartSetupTimer()" id="setupTimerStart">Start</button></center>
                     </li>
                     <li class="list-group-item flex-fill">
                         <center>Demo</center>
                         <p></p>
-                        <center><h2>5:00</h2></center>
+                        <center><h2 id="demoTimer">n/a</h2></center>
                         <p></p>
                         <center>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-success">Start</button>
-                                <button type="button" class="btn btn-warning">Pause</button>
+                                <button type="button" class="btn btn-success" onclick="onStartDemoTimer()" id="demoTimerStart" disabled>Start</button>
+                                <button type="button" class="btn btn-warning" onclick="onPauseDemoTimer()" id="demoTimerPause" disabled>Pause</button>
                             </div>
                         </center>
                     </li>
                     <li class="list-group-item flex-fill">
                         <center>Timeout</center>
                         <p></p>
-                        <center><h2>5:00</h2></center>
+                        <center><h2 id="timeoutTimer">n/a</h2></center>
                         <p></p>
                         <center>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-success">Start</button>
-                                <button type="button" class="btn btn-warning">Pause</button>
+                                <button type="button" class="btn btn-success" onclick="onStartTimeoutTimer()" id="timeoutTimerStart" disabled>Start</button>
+                                <button type="button" class="btn btn-warning" onclick="onPauseTimeoutTimer()" id="timeoutTimerPause" disabled>Pause</button>
                             </div>
                         </center>
                     </li>
@@ -118,19 +135,21 @@
                 <ul class="list-group list-group-horizontal">
                     <li class="list-group-item flex-fill">
                         <center><h6>Goal</h6></center>
-                        <center><h2>0</h2></center>
-                        <center><button type="button" class="btn btn-success">Goal</button></center>
+                        <center><h2 id="score">0</h2></center>
+                        <center><button type="button" class="btn btn-success" onclick="onGoal()" id="goalButton" disabled>Goal</button></center>
+                        <ul id="goalList"><p></p></ul>
                     </li>
                     <li class="list-group-item flex-fill">
                         <center><h6>Penalty</h6></center>
-                        <center><h2>0</h2></center>
+                        <center><h2 id="penalty">0</h2></center>
                         <center>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-secondary">Ball Holding</button>
-                                <button type="button" class="btn btn-warning">Minor Collision</button>
-                                <button type="button" class="btn btn-danger">Major Collision</button>
+                                <button type="button" class="btn btn-secondary" onclick="updatePenaltyInfo(0)">Ball Holding</button>
+                                <button type="button" class="btn btn-warning" onclick="updatePenaltyInfo(1)">Minor Collision</button>
+                                <button type="button" class="btn btn-danger" onclick="updatePenaltyInfo(2)">Major Collision</button>
                             </div>
                         </center>
+                        <ul id="penaltyList"><p></p></ul>
                     </li>
                 </ul>
             </div>
@@ -142,14 +161,18 @@
                         <center><video autoplay="true" id="videoElement"></video>
                         </center> 
                     </div>
-                <hr></hr>
+                    <div id="recordedVideos" style="display: none;">
+                    <hr></hr>
+                    <p></p>
+                    <h5><center>Recorded Footage</center></h5>
+                        <div id="accordion">
+                        </div>
+                    </div>
             </div>
+            <hr></hr>
         </div>
         
     </div>
-
-
-    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -157,56 +180,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <script>
-        var video = document.querySelector("#videoElement");
+    <script src="js/settings.js"></script> 
+    <script src="js/gameplay.js"></script> 
+    <script src="js/camera.js"></script> 
 
-        const videoSelect = document.getElementById('cameraSelect');
-
-        navigator.mediaDevices.enumerateDevices().then(gotDevices).then(getStream).catch();
-
-        videoSelect.onchange = getStream;
-
-        function gotDevices(deviceInfos) {
-            const option = document.createElement('option');
-            option.text = 'Off';
-            option.value = -1;
-            videoSelect.appendChild(option);
-            for (let i = 0; i !== deviceInfos.length; ++i) {
-                const deviceInfo = deviceInfos[i];
-                const option = document.createElement('option');
-                option.value = deviceInfo.deviceId;
-                if (deviceInfo.kind === 'videoinput') {
-                    console.log(videoSelect.length);
-                    option.text = 'Camera ' + (videoSelect.length);
-                    videoSelect.appendChild(option);
-                }
-            }
-        }
-
-        function getStream() {
-            console.log(videoSelect.value)
-            if (video.srcObject) {
-                    video.srcObject.getTracks().forEach(function(track) {
-                    track.stop();
-                });
-            }
-
-            if(videoSelect.value != -1){
-                const constraints = {
-                    video: {
-                        deviceId: {exact: videoSelect.value}
-                    }
-                };
-                navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch();
-            }
-            
-        }
-
-        function gotStream(stream) {
-            //window.stream = stream; // make stream available to console
-            video.srcObject = stream;
-        }
-
-    </script>
   </body>
 </html>
