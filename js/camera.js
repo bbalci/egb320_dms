@@ -1,5 +1,6 @@
 var recordedVids = 1;
 var vids = []
+var goalList = []
 
 var video = document.querySelector("#videoElement");
 
@@ -82,6 +83,15 @@ function gotStream(stream) {
 }
 
 function updateRecordedVideos(url){
+    var goalText = ""
+    if(videoGoal){
+        goalText = " | GOAL";
+        videoGoal = false;
+        goalList.push(1)
+    }else{
+        goalList.push(0);
+    }
+
     var recordedVideoAccordion = document.getElementById("accordion")
     var cardContent = document.createElement('div');
     cardContent.className = "card";
@@ -89,7 +99,7 @@ function updateRecordedVideos(url){
     '<div class="card-header" id="videoHeading"'+recordedVids+'>'+
     '<h5 class="mb-0">'+
         '<button class="btn btn-link" data-toggle="collapse" data-target="#video'+recordedVids+'" aria-expanded="true" aria-controls="video"'+recordedVids+'>'+
-        'Group '+groupNo+' | Video '+recordedVids+
+        'Group '+groupNo+' | Video '+recordedVids+goalText+
         '</button>'+
         '<button type="button" class="btn btn-danger btn-sm" onclick="downloadVideo('+(recordedVids-1)+')">Download</button>'+
     '</h5>'+
@@ -111,6 +121,12 @@ function updateRecordedVideos(url){
 function downloadVideo(vid){
     var a = document.createElement("a");
     a.href = vids[vid];
-    a.setAttribute("download", "Field"+fieldNo+"_Group"+groupNo+"_Video"+(vid+1));
+    if(goalList[vid]){
+        a.setAttribute("download", "Field"+fieldNo+"_Group"+groupNo+"_Video"+(vid+1)+"_GOAL");
+        videoGoal = false;
+    }else{
+        a.setAttribute("download", "Field"+fieldNo+"_Group"+groupNo+"_Video"+(vid+1));
+    }
+    
     a.click();
 }
