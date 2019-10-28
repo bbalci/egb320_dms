@@ -29,33 +29,45 @@
                     <h5>Field Settings</h5>
                     <form>
                         <div class="form-group row">
-                            <label for="fieldNoText" class="col-sm-4 col-form-label">Field No</label>
-                            <div class="col-sm-8">
+                            <label for="fieldNoText" class="col-sm-3 col-form-label">Field No</label>
+                            <div class="col-sm-3">
                             <input type="text" class="form-control" id="fieldNoText" value="1">
                             </div>
                         </div>
                         <div class="form-group row">
-                                <label for="groupNoText" class="col-sm-4 col-form-label">Group No</label>
-                                <div class="col-sm-8">
+                                <label for="groupNoText" class="col-sm-3 col-form-label">Group No</label>
+                                <div class="col-sm-3">
                                 <input type="text" class="form-control" id="groupNoText" placeholder="Group Number">
                                 </div>
                             </div>
                         <div class="form-group row">
-                            <label for="setupDurationText" class="col-sm-4 col-form-label">Setup Duration (s)</label>
-                            <div class="col-sm-8">
-                            <input type="text" class="form-control" id="setupDurationText" value="2">
+                                <label for="setupDurationText" class="col-sm-3 col-form-label">Setup Duration (s)</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="setupDurationText" value="600">
+                                </div>
+                                <label for="setupWarningText" class="col-sm-3 col-form-label">Setup Warning (s)</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="setupWarningText" value="60">
+                                </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="demoDurationText" class="col-sm-3 col-form-label">Demo Duration (s)</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="demoDurationText" value="300">
+                            </div>
+                            <label for="demoWarningText" class="col-sm-3 col-form-label">Demo Warning (s)</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="demoWarningText" value="60">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="demoDurationText" class="col-sm-4 col-form-label">Demo Duration (s)</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="demoDurationText" value="10">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="timeoutDurationText" class="col-sm-4 col-form-label">Timeout Duration (s)</label>
-                            <div class="col-sm-8">
+                            <label for="timeoutDurationText" class="col-sm-3 col-form-label">Timeout Duration (s)</label>
+                            <div class="col-sm-3">
                                 <input type="text" class="form-control" id="timeoutDurationText" value="300">
+                            </div>
+                            <label for="timeoutWarningText" class="col-sm-3 col-form-label">Timeout Warning (s)</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="timeoutWarningText" value="60">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -71,17 +83,30 @@
                         </div>
                         <hr></hr>
                     </form>
-                        <p></p>
-                        <h5>Camera Settings</h5>
-                        <form>
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-4 col-form-label">Camera</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="cameraSelect">
-                                    </select>
-                                </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h5>Test Sounds</h5>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-danger btn-sm" onclick="playSound(0)" id="whistleTest">Setup | Demo Expire</button>
+                                <button type="button" class="btn btn-warning btn-sm" onclick="playSound(1)" id="bellTest">Warning</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="playSound(2)" id="hornTest">Timeout Expire</button>                                
                             </div>
-                        </form>
+                        </div>
+                    </div>
+                    <hr></hr>
+                    <p></p>
+                    <h5>Camera Settings</h5>
+                    <form>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label">Camera</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" id="cameraSelect">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                         
                     
             </div>
