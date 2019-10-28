@@ -2,17 +2,22 @@ var fieldNo = 1;
 
 var groupNo = 0;
 
+var setupTimePaused = false;
 var setupDuration = 600;
+var setupWarning = 60;
 
 var demoTimePaused = false;
 var demoDuration = 300;
 var demoTimeRemaining = 300;
 var demoTimeLastPausedAt = 300;
+var demoWarning = 60;
 
 var timeoutTimePaused = false;
 var timeoutTimeRemaining = 300;
+var timeoutWarning = 60;
 
 var goalScored = false;
+var videoGoal = false;
 var score = 0;
 
 var penalty = 0;
@@ -32,6 +37,10 @@ function saveSettings(){
 
     timeoutTimeRemaining = parseInt(document.getElementById("timeoutDurationText").value);
 
+    //Warning time settings
+    setupWarning = parseInt(document.getElementById("setupWarningText").value);
+    demoWarning = parseInt(document.getElementById("demoWarningText").value);
+    timeoutWarning = parseInt(document.getElementById("timeoutWarningText").value);
 
     updateGamePlay(1)
 }
@@ -68,23 +77,29 @@ function updateGamePlay(call_type){
 }
 
 function resetField(){
+    setupTimePaused = true;
     demoTimePaused = true;
     timeoutTimePaused = true;
     
     setTimeout(function(){ 
         groupNo = 0;
 
+        setupTimePaused = false;
         setupDuration = 600;
+        setupWarning = 60;
 
         demoTimePaused = false;
         demoDuration = 300;
         demoTimeRemaining = 300;
         demoTimeLastPausedAt = 300;
+        demoWarning = 60;
 
         timeoutTimePaused = false;
         timeoutTimeRemaining = 300;
+        timeoutWarning = 60;
 
         goalScored = false;
+        videoGoal = false;
         score = 0;
 
         penalty = 0;
@@ -101,4 +116,10 @@ function resetField(){
         
         document.getElementById('nav-settings-tab').click();
     }, 200);
+}
+
+function playSound(sound){
+    if(sound==0) whistle.play();
+    if(sound==1) bell.play();
+    if(sound==2) horn.play();
 }
