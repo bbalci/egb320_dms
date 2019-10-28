@@ -21,15 +21,20 @@ function onStartSetupTimer(){
 
         document.getElementById("setupTimer").innerHTML = minutes + " m " + seconds + " s";
 
+        if(setupTimePaused){
+            console.log("Setup Time Reset!")
+            clearInterval(x);
+        }
+
         // If the count down is finished, write some text
         if (difference < 0) {
-            whistle.play()
+            whistle.play();
             clearInterval(x);
             document.getElementById("setupTimer").innerHTML = "Expired";
             document.getElementById("demoTimerStart").disabled = false;
             document.getElementById("timeoutTimerStart").disabled = false;
-        }else if (difference >= 30 && difference <= 30.1) {
-            bell.play()
+        }else if (difference > (setupWarning-0.1) && difference < (setupWarning+0.1)) {
+            bell.play();
         }
     }, 100);
     console.log("Started Setup Timer!")
@@ -68,6 +73,7 @@ function onStartDemoTimer(){
                 var goalRate = demoTimeLastPausedAt - difference;
                 updateGoalInfo(goalTime, goalRate);
                 goalScored = false;
+                videoGoal = true;
             }
             demoTimeRemaining = difference;
             demoTimeLastPausedAt = difference;
@@ -75,7 +81,7 @@ function onStartDemoTimer(){
         }
 
         if (difference < 0) {
-            whistle.play()
+            whistle.play();
             clearInterval(x);
             document.getElementById("demoTimer").innerHTML = "Expired";
             document.getElementById("demoTimerStart").disabled = true;
@@ -84,9 +90,9 @@ function onStartDemoTimer(){
             document.getElementById("timeoutTimerPause").disabled = true;
             document.getElementById("goalButton").disabled = true;
             window.dispatchEvent(pauseEvent);
-        }else if (difference >= 30 && difference <= 30.1) {
+        }else if (difference > (demoWarning-0.1) && difference < (demoWarning+0.1)) {
             console.log(difference)
-            bell.play()
+            bell.play();
         }
     }, 100);
     console.log("Started Demo Timer!")
@@ -128,13 +134,13 @@ function onStartTimeoutTimer(){
         }
 
         if (difference < 0) {
-            horn.play()
+            horn.play();
             clearInterval(x);
             document.getElementById("timeoutTimer").innerHTML = "Expired";
             document.getElementById("timeoutTimerStart").disabled = true;
             document.getElementById("timeoutTimerPause").disabled = true;
-        }else if (difference > 29.9 && difference < 30.1) {
-            bell.play()
+        }else if (difference > (timeoutWarning-0.1) && difference < (timeoutWarning+0.1)) {
+            bell.play();
         }
     }, 100);
     console.log("Started Timeout Timer!")
