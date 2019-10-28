@@ -48,11 +48,9 @@ function getStream() {
 }
 
 function gotStream(stream) {
-    //window.stream = stream; // make stream available to console
     video.srcObject = stream;
 
     let start = document.getElementById('demoTimerStart');
-    //let stop = document.getElementById('demoTimerPause');
     var mediaRecorder = new MediaRecorder(stream);
     let chunks = [];
         
@@ -64,12 +62,6 @@ function gotStream(stream) {
         mediaRecorder.stop();
         console.log(mediaRecorder.state);
     });
-    /*
-    stop.addEventListener('click', (ev)=>{
-        mediaRecorder.stop();
-        console.log(mediaRecorder.state);
-    });
-    */
     mediaRecorder.ondataavailable = function(ev) {
         chunks.push(ev.data);
     }

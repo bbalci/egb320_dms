@@ -5,7 +5,6 @@ var horn = new Audio('sounds/airhorn.wav');
 var pauseEvent = new CustomEvent('demoTimePaused');
 
 function onStartSetupTimer(){
-    // Convert duration to seconds
     document.getElementById("setupTimerStart").disabled = true;
     elapsed_seconds = 0;
 
@@ -13,11 +12,8 @@ function onStartSetupTimer(){
         elapsed_seconds += 0.1;
         difference = setupDuration - elapsed_seconds;
 
-        // Calculations for minutes and seconds
         var minutes = Math.floor(difference/60);
         var seconds = Math.floor(difference%60);
-
-        // Display the result in the element with id="demo"
 
         document.getElementById("setupTimer").innerHTML = minutes + " m " + seconds + " s";
 
@@ -26,7 +22,6 @@ function onStartSetupTimer(){
             clearInterval(x);
         }
 
-        // If the count down is finished, write some text
         if (difference < 0) {
             whistle.play();
             clearInterval(x);
@@ -43,7 +38,6 @@ function onStartSetupTimer(){
 function onStartDemoTimer(){
     demoTimePaused = false;
 
-    // Convert duration to seconds
     document.getElementById("demoTimerStart").disabled = true;
     document.getElementById("demoTimerPause").disabled = false;
 
@@ -56,15 +50,11 @@ function onStartDemoTimer(){
         elapsed_seconds += 0.1;
         difference = duration - elapsed_seconds;
 
-        // Calculations for minutes and seconds
         var minutes = Math.floor(difference/60);
         var seconds = Math.floor(difference%60);
 
-        // Display the result in the element with id="demo"
-
         document.getElementById("demoTimer").innerHTML = minutes + " m " + seconds + " s";
 
-        // If the count down is finished, write some text
         if(demoTimePaused){
             console.log("Demo Paused");
             clearInterval(x);
@@ -108,7 +98,6 @@ function onPauseDemoTimer(){
 function onStartTimeoutTimer(){
     timeoutTimePaused = false;
 
-    // Convert duration to seconds
     document.getElementById("timeoutTimerStart").disabled = true;
     document.getElementById("timeoutTimerPause").disabled = false;
 
@@ -119,15 +108,11 @@ function onStartTimeoutTimer(){
         elapsed_seconds += 0.1;
         difference = duration - elapsed_seconds;
 
-        // Calculations for minutes and seconds
         var minutes = Math.floor(difference/60);
         var seconds = Math.floor(difference%60);
 
-        // Display the result in the element with id="demo"
-
         document.getElementById("timeoutTimer").innerHTML = minutes + " m " + seconds + " s";
 
-        // If the count down is finished, write some text
         if(timeoutTimePaused){
             clearInterval(x);
             timeoutTimeRemaining = difference;
