@@ -1,6 +1,6 @@
 # EGB320 Demo Management System
 
-QUT's EGB320 unit replicates RoboCup Small Size League and challenges the students to build soccer playing robots. This browser-based system is designed to be used during the final robot demonstrations to manage timing, scoring and video recording.
+QUT's EGB320 unit replicates RoboCup Small Size League and challenges the students to build soccer playing robots. This browser-based system is designed to be used during the final robot demonstrations to manage timing, scoring and video recording. A live demo can be found [here](https://balci.xyz/egb320_dms).
 
 ### Functionality
 So far, the system,
