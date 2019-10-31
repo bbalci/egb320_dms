@@ -1,3 +1,11 @@
+/*
+---- CODE SOURCE ----
+[HTML5 Video Capturing]        -> https://www.html5rocks.com/en/tutorials/getusermedia/intro/
+[HTML5 Video Capturing+Saving] -> https://gist.github.com/prof3ssorSt3v3/48621be79794a8a3adeed7971786d4d8
+---- CODE SOURCE ----
+*/
+
+// Initialize variables related to the video recording
 var recordedVids = 1;
 var vids = []
 var goalList = []
@@ -6,10 +14,12 @@ var video = document.querySelector("#videoElement");
 
 const videoSelect = document.getElementById('cameraSelect');
 
-navigator.mediaDevices.enumerateDevices().then(gotDevices).then(getStream).catch();
+navigator.mediaDevices.enumerateDevices().then(gotDevices).then(getStream).catch(function(err){console.log(err)});
 
 videoSelect.onchange = getStream;
 
+// gotDevices(deviceInfos)
+// Checks the available cameras and updates the videoSelect dropdown menu
 function gotDevices(deviceInfos) {
     const option = document.createElement('option');
     option.text = 'Off';
@@ -27,6 +37,8 @@ function gotDevices(deviceInfos) {
     }
 }
 
+// getStream()
+// When a camera is selected from the dropdown menu starts the media stream to video component
 function getStream() {
     console.log(videoSelect.value)
     if (video.srcObject) {
@@ -47,10 +59,15 @@ function getStream() {
     
 }
 
+// gotStream(stream)
+// Records the video stream
+// Recording starts when Start button in demo section is pressed
+// Recording stops when the function recieves an 'demoTimePaused' event 
 function gotStream(stream) {
     video.srcObject = stream;
 
     let start = document.getElementById('demoTimerStart');
+    // mediaRecorder settings 
     var mediaRecorder = new MediaRecorder(stream);
     let chunks = [];
         
@@ -66,6 +83,7 @@ function gotStream(stream) {
         chunks.push(ev.data);
     }
     mediaRecorder.onstop = (ev)=>{
+        // blob settings
         let blob = new Blob(chunks, { 'type' : 'video/mp4;' });
         chunks = [];
         let videoURL = window.URL.createObjectURL(blob);
@@ -74,6 +92,8 @@ function gotStream(stream) {
     }
 }
 
+// updateRecordedVideos(url)
+// Places the recoded video in HTML and creates the download button
 function updateRecordedVideos(url){
     var goalText = ""
     if(videoGoal){
@@ -110,6 +130,8 @@ function updateRecordedVideos(url){
     recordedVids += 1;
 }
 
+// downloadVideo(vid)
+// Creates the link to download the recorded streams
 function downloadVideo(vid){
     var a = document.createElement("a");
     a.href = vids[vid];

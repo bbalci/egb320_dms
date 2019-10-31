@@ -1,10 +1,16 @@
+// Load game sounds from files 
 var whistle = new Audio('sounds/whistle.wav');
 var bell = new Audio('sounds/bell.wav');
 var horn = new Audio('sounds/airhorn.wav');
 
+// Custom event to be trigger when demo time is paused
 var pauseEvent = new CustomEvent('demoTimePaused');
 
+// onStartSetupTimer()
+// Setup Timer
+// Loops in each 100 ms (0.1 s)
 function onStartSetupTimer(){
+    // Disable Start button
     document.getElementById("setupTimerStart").disabled = true;
     elapsed_seconds = 0;
 
@@ -17,11 +23,13 @@ function onStartSetupTimer(){
 
         document.getElementById("setupTimer").innerHTML = minutes + " m " + seconds + " s";
 
+        // Reset Field stops the timer
         if(setupTimePaused){
             console.log("Setup Time Reset!")
             clearInterval(x);
         }
 
+        // Play sounds and update HTML components
         if (difference < 0) {
             whistle.play();
             clearInterval(x);
@@ -35,9 +43,13 @@ function onStartSetupTimer(){
     console.log("Started Setup Timer!")
 }
 
+// onStartDemoTimer()
+// Demo Timer
+// Loops in each 100 ms (0.1 s)
 function onStartDemoTimer(){
     demoTimePaused = false;
 
+    // Update button status 
     document.getElementById("demoTimerStart").disabled = true;
     document.getElementById("demoTimerPause").disabled = false;
 
@@ -55,9 +67,12 @@ function onStartDemoTimer(){
 
         document.getElementById("demoTimer").innerHTML = minutes + " m " + seconds + " s";
 
+        // Demo can be caused by Pause, Goal or Reset Field buttons
         if(demoTimePaused){
             console.log("Demo Paused");
             clearInterval(x);
+            // If paused by Goal button save goal information and update score
+
             if(goalScored){
                 var goalTime = demoDuration - difference;
                 var goalRate = demoTimeLastPausedAt - difference;
@@ -67,9 +82,12 @@ function onStartDemoTimer(){
             }
             demoTimeRemaining = difference;
             demoTimeLastPausedAt = difference;
+
+            // Notify video recorder to stop recording due to a pause in demo time
             window.dispatchEvent(pauseEvent);
         }
 
+        // Play sounds and update HTML components
         if (difference < 0) {
             whistle.play();
             clearInterval(x);
@@ -88,6 +106,9 @@ function onStartDemoTimer(){
     console.log("Started Demo Timer!")
 }
 
+// onPauseDemoTimer()
+// Pause button activates this function
+// Updates demoTimePaused variable and updates HTML componenets 
 function onPauseDemoTimer(){
     demoTimePaused = true;
     document.getElementById("demoTimerPause").disabled = true;
@@ -95,9 +116,13 @@ function onPauseDemoTimer(){
     document.getElementById("goalButton").disabled = true;
 }
 
+// onStartTimeoutTimer()
+// Timeout Timer
+// Loops in each 100 ms (0.1s)
 function onStartTimeoutTimer(){
     timeoutTimePaused = false;
 
+    // Update button status
     document.getElementById("timeoutTimerStart").disabled = true;
     document.getElementById("timeoutTimerPause").disabled = false;
 
@@ -113,11 +138,13 @@ function onStartTimeoutTimer(){
 
         document.getElementById("timeoutTimer").innerHTML = minutes + " m " + seconds + " s";
 
+        // Timeout time can be paused by Pause and Reset Field buttons
         if(timeoutTimePaused){
             clearInterval(x);
             timeoutTimeRemaining = difference;
         }
 
+        // Play sounds and update HTML components
         if (difference < 0) {
             horn.play();
             clearInterval(x);
@@ -131,12 +158,18 @@ function onStartTimeoutTimer(){
     console.log("Started Timeout Timer!")
 }
 
+// onPauseTimeoutTimer()
+// Pause button activates this function
+// Updates timeoutTimePaused variable and updates HTML componenets 
 function onPauseTimeoutTimer(){
     timeoutTimePaused = true;
     document.getElementById("timeoutTimerPause").disabled = true;
     document.getElementById("timeoutTimerStart").disabled = false;
 }
 
+// onGoal()
+// Goal button activates this function
+// Updates demoTimePaused, goalScored variables and updates HTML componenets 
 function onGoal(){
     demoTimePaused = true;
     goalScored = true;
@@ -145,6 +178,8 @@ function onGoal(){
     document.getElementById("demoTimerStart").disabled = false;
 }
 
+// updateGoalInfo()
+// Displays goal time and rate 
 function updateGoalInfo(goalTime, goalRate){
     score += 1; 
     document.getElementById("score").innerHTML = score;
@@ -164,6 +199,8 @@ function updateGoalInfo(goalTime, goalRate){
     goals.appendChild(goaltime);
 }
 
+// updatePenaltyInfo()
+// Displays penalty info
 function updatePenaltyInfo(penaltyType){
     var penalties = document.getElementById("penaltyList")
     const penaltyItem = document.createElement('li');
